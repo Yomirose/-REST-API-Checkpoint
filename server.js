@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 const PORT = 5000;
-const User = require("./models/user.js");
+const User = require("./models/User.js");
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -46,7 +46,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.get('/register', async (req, res) => {
+app.get('/user', async (req, res) => {
     try {
       const users = await User.find();
       res.json(users);
@@ -55,7 +55,7 @@ app.get('/register', async (req, res) => {
     }
   });
 
-  app.put('/register/:id', async (req, res) => {
+  app.put('/user/:id', async (req, res) => {
     try {
       const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
       if (!user) return res.status(404).json({ message: 'User not found' });
@@ -65,7 +65,7 @@ app.get('/register', async (req, res) => {
     }
   });
 
-  app.delete('/register/:id', async (req, res) => {
+  app.delete('/user/:id', async (req, res) => {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
       if (!user) return res.status(404).json({ message: 'User not found' });
